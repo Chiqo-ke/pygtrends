@@ -13,6 +13,12 @@ from .news_article import *
 from .timeframe_utils import convert_timeframe, check_timeframe_resolution
 from .hierarchical_search import create_hierarchical_index
 from .trend_list import TrendList
+from .authenticated_trends import (
+	AuthenticatedExploreSession,
+	build_explore_url,
+	extract_from_captured_events,
+	normalize_related_query_tables,
+)
 from time import sleep,time
 
 class TrendsQuotaExceededError(Exception):
@@ -414,6 +420,29 @@ class Trends:
 		if return_raw:
 			return token, data
 		return TrendsDataConverter.related_queries(data)
+
+	def get_related_query_tables(self, query, start_date, end_date, geo="Worldwide",
+								search_type="web", debugger_url="http://127.0.0.1:9222",
+								return_raw=False, download_dir=None):
+		"""Extract authenticated Explore Top and Rising Related Queries via CDP."""
+		explore_url = build_explore_url(query, start_date, end_date, geo, search_type)
+		self.last_explore_session = AuthenticatedExploreSession(debugger_url)
+		events = self.last_explore_session.capture(explore_url, download_dir=download_dir)
+		tables = extract_from_captured_events(events)
+		return tables if return_raw else normalize_related_query_tables(tables)
+
+	def get_related_queries(self, query, start_date, end_date, geo="Worldwide",
+							search_type="web", debugger_url="http://127.0.0.1:9222"):
+		"""Return normalized rows from both authenticated Explore query tables."""
+		tables = self.get_related_query_tables(
+			query, start_date, end_date, geo=geo, search_type=search_type,
+			debugger_url=debugger_url,
+		)
+		return tables["top"] + tables["rising"]
+
+	def retry_missing_downloads(self, labels, download_dir=None, delay=3.0):
+		"""Retry only browser CSV buttons whose exports were not observed."""
+		return self.last_explore_session.retry_missing_downloads(labels, download_dir, delay)
 	
 	def related_topics(self, keyword, timeframe="today 12-m", geo='', cat=0, gprop='', return_raw = False, headers=None):
 		"""

@@ -3,20 +3,24 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "trendspy"
-version = "0.1.6"
-description = "A Python library for accessing Google Trends data"
+name = "gtrendspy"
+version = "0.2.0"
+description = "Google Trends extraction with public API helpers and authenticated Edge Explore exports"
 readme = "README.md"
 requires-python = ">=3.7"
 license = {file = "LICENSE"}
 authors = [
-    {name = "SDil"},
+    {name = "Chiqo-ke"},
+]
+maintainers = [
+    {name = "Chiqo-ke"},
 ]
 dependencies = [
     "requests>=2.25.0",
     "pandas>=1.2.0",
     "numpy>=1.19.0",
-    "python-dateutil>=2.8.0"
+    "python-dateutil>=2.8.0",
+    "websocket-client>=1.6.0"
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -37,9 +41,9 @@ classifiers = [
 keywords = ["google-trends", "trends", "analytics", "data-analysis"]
 
 [project.urls]
-Homepage = "https://github.com/sdil87/trendspy"
-Repository = "https://github.com/sdil87/trendspy.git"
-Issues = "https://github.com/sdil87/trendspy/issues"
+Homepage = "https://github.com/Chiqo-ke/trendspy"
+Repository = "https://github.com/Chiqo-ke/trendspy.git"
+Issues = "https://github.com/Chiqo-ke/trendspy/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/trendspy"]

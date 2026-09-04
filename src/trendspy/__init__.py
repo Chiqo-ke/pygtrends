@@ -12,14 +12,14 @@ Main components:
 - NewsArticle: Class representing news articles related to trends
 
 Project links:
-    Homepage: https://github.com/sdil87/trendspy
-    Repository: https://github.com/sdil87/trendspy.git
-    Issues: https://github.com/sdil87/trendspy/issues
+    Homepage: https://github.com/Chiqo-ke/trendspy
+    Repository: https://github.com/Chiqo-ke/trendspy.git
+    Issues: https://github.com/Chiqo-ke/trendspy/issues
 """
 
 from .client import Trends, BatchPeriod
 from .trend_keyword import TrendKeyword, TrendKeywordLite
 from .news_article import NewsArticle
 
-__version__ = "0.1.6"
+__version__ = "0.2.0"
 __all__ = ['Trends', 'BatchPeriod', 'TrendKeyword', 'TrendKeywordLite', 'NewsArticle', 'TrendList']

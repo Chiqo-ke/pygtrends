@@ -40,3 +40,4 @@ ENV/
 .coverage
 .pytest_cache/
 htmlcov/
+tests/fixtures/related_queries_rpc.json
